@@ -1,0 +1,81 @@
+::ng-deep .ck-content {
+  width: 15.8cm;
+  min-height: 21cm;
+  padding: 1cm 2cm 2cm;
+  border: 1px hsl(0, 0%, 82.7%) solid;
+  border-radius: var(--ck-border-radius);
+  background: white;
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1);
+  margin: 0 auto;
+}
+
+::ng-deep .document-editor {
+  border: 1px solid var(--ck-color-base-border);
+  border-radius: var(--ck-border-radius);
+  max-height: calc(100vh - 20px);
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+::ng-deep .document-editor__toolbar {
+  z-index: 1;
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.2);
+  border-bottom: 1px solid var(--ck-color-toolbar-border);
+}
+
+::ng-deep .document-editor__editable-container {
+  // padding: calc(2 * var(--ck-spacing-large));
+  background: #fafafa00;
+  overflow-y: scroll;
+}
+
+::ng-deep .document-editor__editable-container .ck-editor__editable {
+  width: 100%;
+  min-height: calc(100vh - 200px);
+  padding: 1cm 2cm 2cm;
+  // border: 1px hsl(0, 0%, 82.7%) solid;
+  border-radius: var(--ck-border-radius);
+  background: #ffffff00;
+  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.1);
+  margin: 0 auto;
+}
+
+::ng-deep .document-editor__toolbar .ck-toolbar {
+  border: 0;
+  border-radius: 0;
+}
+
+::ng-deep .ck.ck-editor__editable_inline p {
+  margin-bottom: 0.1em;
+}
+
+::ng-deep .document-editor .ck-content,
+.document-editor .ck-heading-dropdown .ck-list .ck-button__label {
+  font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.note-title {
+  margin: 16px 0;
+  
+  .note-title-input {
+    border: 1px solid transparent;
+    border-radius: 2px !important;
+    font-size: 18px;
+    font-variant-ligatures: no-contextual;
+    height: 20px;
+    width: 500px;
+    line-height: 22px;
+    margin: 0;
+    min-width: 1px;
+    padding: 2px 7px;
+  }
+
+  .note-title-label {
+    cursor: pointer;
+  }
+}
+
+.note-title .action {
+  float: right;
+}
+

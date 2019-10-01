@@ -1,0 +1,225 @@
+
+  svg#clouds {
+    position: fixed;
+    bottom: -160px;
+    left: -230px;
+    z-index: -10;
+    width: 1920px;
+  }
+//   ::ng-deep app-root {
+//     position: absolute;
+//     height: 100%;
+//     width: 100%;
+//     overflow: hidden;
+//     display: flex;
+//     flex-direction: column;
+//   }
+  
+//   h1 {
+//     position: relative;
+//     flex: 0;
+//     font-size: 22px;
+//     padding: 0 20px;
+//     height: 50px;
+//     margin: 0;
+//   }
+  
+//   .omnibar {
+//     display: flex;
+//     flex-wrap: wrap;
+//     justify-content: space-between;
+//     position: relative;
+//     flex: 0 1 auto;
+//     width: 100%;
+//     /*overflow: hidden;*/
+//   }
+  
+//   .toolbar {
+//     position: relative;
+//     padding-left: 10px;
+//   }
+  
+//   .widgetbar {
+//     position: relative;
+//     padding: 10px 0;
+//     width: 275px;
+//   }
+  
+//   .main-content {
+//     width: 100%;
+//     flex: 1 0px;
+//     display: flex;
+//     flex-direction: column;
+//     overflow: auto;
+//   }
+  
+//   .dashboard {
+//     flex: 1;
+//   }
+  
+//   .panel-heading {
+//     border-bottom: 1px solid #F0F0F0;
+//     display: inline-block;
+//     position: relative;
+//     width: 100%;
+//     top: 0;
+//   }
+//   .panel-heading .panel-title {
+//     padding: 10px;
+//     margin: 0;
+//   }
+  
+//   .panel-body {
+//     overflow: auto;
+//     padding: 0 10px 10px;
+//     position: absolute;
+//     top: 37px;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//   }
+  
+// ::ng-deep .gridster-item-prototype {
+//     display: block;
+//     background-color: #afafaf;
+//     position: relative;
+//     float: left;
+//     z-index: 99;
+//     text-align: center;
+//     font-weight: bold;
+//     margin: 5px;
+//     width: 80px;
+//     height: 60px;
+  
+//   }
+  
+// ::ng-deep .gridster-item-prototype.is-over .gridster-item-inner {
+  
+//     visibility: visible;
+//   }
+  
+// ::ng-deep .gridster-item-prototype .gridster-item-inner {
+//     position: absolute;
+//     top:0;
+//     left: 0;
+//     overflow: auto;
+//     width: 80px;
+//     height: 60px;
+//     visibility: hidden;
+  
+//     -webkit-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+//     -moz-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+//     -o-transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+//     transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+//   }
+  
+// ::ng-deep .position-highlight .inner {
+//     position: absolute;
+//     top: 5px;
+//     bottom: 5px;
+//     left: 5px;
+//     right: 5px;
+  
+//     background-color: #768294;
+//     border: 1px solid transparent;
+//     -webkit-transition: background 3s;
+//     transition: background 3s;
+//     border-radius: 3px;
+//     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+//   }
+  
+//   ::ng-deep .gridster-item-inner {
+//     position: absolute;
+//     background: #fff;
+//     border: 1px solid transparent;
+//     top: 5px;
+//     bottom: 5px;
+//     left: 5px;
+//     right: 5px;
+//     -webkit-transition: background 3s;
+//     transition: background 3s;
+//     border-radius: 3px;
+//     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+//   }
+
+//   ::ng-deep .is-dragging .gridster-item-inner {
+//     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.24), 0 2px 4px rgba(0, 0, 0, 0.48);
+//     top: -3px;
+//     bottom: 13px;
+//   }
+
+  // .document-editor-container {
+  //   padding: 1.8em;
+  //   background: #fafafa;
+  //   overflow-y: scroll;
+  // }
+
+  ::ng-deep .ck-content {
+    width: 15.8cm;
+    min-height: 21cm;
+    padding: 1cm 2cm 2cm;
+    border: 1px hsl( 0,0%,82.7% ) solid;
+    border-radius: var(--ck-border-radius);
+    background: white;
+    box-shadow: 0 0 5px hsla( 0,0%,0%,.1 );
+    margin: 0 auto;
+  }
+
+  ::ng-deep .document-editor {
+    border: 1px solid var(--ck-color-base-border);
+    border-radius: var(--ck-border-radius);
+
+    /* Set vertical boundaries for the document editor. */
+    max-height: calc(100vh - 20px);
+
+    /* This element is a flex container for easier rendering. */
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+::ng-deep .document-editor__toolbar {
+  /* Make sure the toolbar container is always above the editable. */
+  z-index: 1;
+
+  /* Create the illusion of the toolbar floating over the editable. */
+  box-shadow: 0 0 5px hsla( 0,0%,0%,.2 );
+
+  /* Use the CKEditor CSS variables to keep the UI consistent. */
+  border-bottom: 1px solid var(--ck-color-toolbar-border);
+}
+
+::ng-deep .document-editor__editable-container {
+  padding: calc( 2 * var(--ck-spacing-large) );
+  background: var(--ck-color-base-foreground);
+
+  /* Make it possible to scroll the "page" of the edited content. */
+  overflow-y: scroll;
+}
+
+::ng-deep .document-editor__editable-container .ck-editor__editable {
+  /* Set the dimensions of the "page". */
+  width: 15.8cm;
+  min-height: calc(100vh - 232px);
+
+  /* Keep the "page" off the boundaries of the container. */
+  padding: 1cm 2cm 2cm;
+
+  border: 1px hsl( 0,0%,82.7% ) solid;
+  border-radius: var(--ck-border-radius);
+  background: white;
+
+  /* The "page" should cast a slight shadow (3D illusion). */
+  box-shadow: 0 0 5px hsla( 0,0%,0%,.1 );
+
+  /* Center the "page". */
+  margin: 0 auto;
+}
+/* Adjust the look of the toolbar inside the container. */
+::ng-deep .document-editor__toolbar .ck-toolbar {
+  border: 0;
+  border-radius: 0;
+}
+::ng-deep .document-editor .ck-content,
+.document-editor .ck-heading-dropdown .ck-list .ck-button__label {
+    font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

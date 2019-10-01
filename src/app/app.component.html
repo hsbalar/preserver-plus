@@ -1,137 +1,45 @@
-<div class="omnibar">
-  <div class="toolbar">
-    Lanes:
-    <button (click)="removeLine(gridster)">-</button>
-    {{ gridsterOptions.lanes }}
-    <button (click)="addLine(gridster)">+</button>
-
-    <button (click)="addWidgetWithoutData()">
-      Add widget without data
-    </button>
-
-    <button (click)="removeAllWidgets()">
-      Remove all widgets
-    </button>
-
-    <button (click)="resetWidgets()">
-      Reset widgets
-    </button>
-
-    <br>
-    <label for="ratio">Ratio</label><input type="number" id="ratio" [(ngModel)]="gridsterOptions.widthHeightRatio"
-      min="0.1" (change)="gridster.setOption('widthHeightRatio', gridsterOptions.widthHeightRatio).reload()">
-
-    <input id="draggable" type="checkbox" [(ngModel)]="gridsterOptions.dragAndDrop" value="true"
-      (change)="gridster.setOption('dragAndDrop', gridsterOptions.dragAndDrop)"><label for="draggable">Draggable</label>
-
-    <input type="checkbox" [(ngModel)]="gridsterOptions.resizable" value="true" id="resizable"
-      (change)="gridster.setOption('resizable', gridsterOptions.resizable)"><label for="resizable">Resizable</label>
-
-    <input type="checkbox" [(ngModel)]="gridsterOptions.floating" value="true" id="floating"
-      (change)="gridster.setOption('floating', gridsterOptions.floating)"><label for="floating">Floating
-      (gravity)</label>
-    <br>
-    Direction
-    <label>
-      <input type="radio" [(ngModel)]="gridsterOptions.direction" value="none"
-        (change)="gridster.setOption('direction', 'none').reload()">None
-    </label>
-    <label>
-      <input type="radio" [(ngModel)]="gridsterOptions.direction" value="horizontal"
-        (change)="gridster.setOption('direction', 'horizontal').reload()">Horizontal
-    </label>
-    <label>
-      <input type="radio" [(ngModel)]="gridsterOptions.direction" value="vertical"
-        (change)="gridster.setOption('direction', 'vertical').reload()">Vertical
-    </label>
-    <br>
-    Max item size: {{itemOptions.maxWidth}} x {{itemOptions.maxHeight}}
-  </div>
-  <div class="widgetbar">
-    <div ngxGridsterItemPrototype [config]="{helper: true}" [w]="1" [h]="1" [wSm]="1" [hSm]="1" [wMd]="2" [hMd]="1"
-      [wLg]="2" [hLg]="2" [wXl]="3" [hXl]="2" (drop)="addWidgetFromDrag(gridster, $event)" (enter)="over($event)"
-      (out)="out($event)" class="gridster-item-prototype">
-      Drag me (clone)<br>
-      1x1
-      <div _ngcontent-uoe-1="" class="gridster-item-inner" style="width: 0;height: 0;">
-        <div _ngcontent-uoe-2="" class="panel-heading">
-          <h5 _ngcontent-uoe-2="" class="panel-title">New widget</h5>
-        </div>
-      </div>
+<nz-layout>
+  <nz-header>
+    <div class="logo"><a href="#" routerLink="/">Preserver</a></div>
+    <div class="header-action" *ngIf="accountService.user; else userNotLogin">
+      <nz-avatar nzIcon="user" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+      <a nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
+        {{accountService?.user?.user_id}} <i nz-icon nzType="down"></i>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu nzSelectable>
+          <li nz-menu-item>Profile</li>
+          <li nz-menu-item>Logout</li>
+        </ul>
+      </nz-dropdown-menu>
     </div>
-
-    <div ngxGridsterItemPrototype [config]="{helper: true}" [w]="2" [h]="2" (drop)="addWidgetFromDrag(gridster, $event)"
-      (enter)="over($event)" (out)="out($event)" class="gridster-item-prototype">
-      Drag me (clone)<br>
-      1x2
-      <div _ngcontent-uoe-1="" class="gridster-item-inner" style="width: 0;height: 0;">
-        <div _ngcontent-uoe-2="" class="panel-heading">
-          <h5 _ngcontent-uoe-2="" class="panel-title">New widget</h5>
-        </div>
+    <ng-template #userNotLogin>
+      <div class="header-action">
+        <a href="#" routerLink="login">
+          Login <i nz-icon nzType="login" nzTheme="outline"></i>
+        </a>
       </div>
+    </ng-template>
+  </nz-header>
+  <nz-content>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
     </div>
-
-    <div ngxGridsterItemPrototype [config]="{helper: false}" [w]="2" [h]="1"
-      (drop)="addWidgetFromDrag(gridster, $event)" (enter)="over($event)" (out)="out($event)"
-      class="gridster-item-prototype">
-      Drag me <br>
-      2x1
-      <div _ngcontent-uoe-1="" class="gridster-item-inner" style="width: 0;height: 0;">
-        <div _ngcontent-uoe-2="" class="panel-heading">
-          <h5 _ngcontent-uoe-2="" class="panel-title">New widget</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="main-content">
-  <ngx-gridster [options]="gridsterOptions" [draggableOptions]="gridsterDraggableOptions" (reflow)="onReflow($event)"
-    (optionsChange)="optionsChange($event)" #gridster1 class="dashboard">
-
-    <ngx-gridster-item *ngFor="let widget of widgets; let indx = index" #itemComp [options]="itemOptions"
-      [dragAndDrop]="widget.dragAndDrop" [resizable]="widget.resizable" [(x)]="widget.x" [(y)]="widget.y"
-      [(xSm)]="widget.xSm" [(ySm)]="widget.ySm" [(xMd)]="widget.xMd" [(yMd)]="widget.yMd" [(xLg)]="widget.xLg"
-      [(yLg)]="widget.yLg" [(xXl)]="widget.xXl" [(yXl)]="widget.yXl" [(w)]="widget.w" [(h)]="widget.h"
-      [(wSm)]="widget.wSm" [(hSm)]="widget.hSm" [(wMd)]="widget.wMd" [(hMd)]="widget.hMd" [(wLg)]="widget.wLg"
-      [(hLg)]="widget.hLg" [(wXl)]="widget.wXl" [(hXl)]="widget.hXl" (change)="itemChange($event, gridster1)">
-
-      <div class="panel-heading">
-        <h5 class="panel-title">{{ widget.title }}</h5>
-      </div>
-
-      <div class="panel-body">
-        <textarea class="editor">hello stack overflow world</textarea>
-        <!-- <p>
-          Position: {{itemComp?.item?.x}} x {{itemComp?.item?.y}}<br>
-          Size: {{itemComp?.item?.w}} x {{itemComp?.item?.h}}<br>
-        </p>
-        <p>
-          <label>
-            <input type="checkbox" [(ngModel)]="widget.dragAndDrop" value="true"> Draggable
-          </label>
-          <label>
-            <input type="checkbox" [(ngModel)]="widget.resizable" value="true"> Resizable
-          </label>
-          <button (click)="setWidth(widget, 1, $event, gridster1)">width +</button>
-          <button (click)="setWidth(widget, -1, $event, gridster1)">width -</button>
-          <button (click)="setHeight(widget, 1, $event, gridster1)">height +</button>
-          <button (click)="setHeight(widget, -1, $event, gridster1)">height -</button>
-        </p>
-        <p>
-          <button (click)="remove($event, indx,gridster1)">remove</button>
-        </p>
-
-        <pre>{{ widget | json }}</pre> -->
-
-      </div>
-
-    </ngx-gridster-item>
-
-  </ngx-gridster>
-</div>
-<svg id="clouds" alt="Gray Clouds Background" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"
-  viewBox="0 0 2611.084 485.677">
-  <path id="Path_39" data-name="Path 39"
+  </nz-content>
+</nz-layout>
+<svg
+  id="clouds"
+  alt="Gray Clouds Background"
+  xmlns="http://www.w3.org/2000/svg"
+  width="2611.084"
+  height="485.677"
+  viewBox="0 0 2611.084 485.677"
+>
+  <path
+    id="Path_39"
+    data-name="Path 39"
     d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
-    transform="translate(142.69 -634.312)" fill="#eee" />
+    transform="translate(142.69 -634.312)"
+    fill="#eee"
+  />
 </svg>

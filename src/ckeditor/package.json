@@ -1,0 +1,42 @@
+{
+  "name": "@ckeditor/ckeditor5-angular",
+  "version": "0.0.1",
+  "description": "Official Angular 2+ component for CKEditor 5 – the best browser-based rich text editor.",
+  "keywords": [
+    "wysiwyg",
+    "rich text",
+    "editor",
+    "html",
+    "contentEditable",
+    "editing",
+    "angular",
+    "angular2",
+    "ng",
+    "component",
+    "ckeditor",
+    "ckeditor5",
+    "ckeditor 5"
+  ],
+  "peerDependencies": {
+    "@angular/core": ">=5.0.0",
+    "@angular/common": ">=5.0.0",
+    "@angular/forms": ">=5.0.0"
+  },
+  "author": "CKSource (http://cksource.com/)",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://ckeditor.com",
+  "bugs": "https://github.com/ckeditor/ckeditor5-angular/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ckeditor/ckeditor5-angular.git"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "./index.ts"
+    },
+    "whitelistedNonPeerDependencies": [
+      "."
+    ],
+    "dest": "../../dist"
+  }
+}

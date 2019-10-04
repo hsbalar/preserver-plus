@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-login',
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: any) => {
         this.accountService.currentUser.next(res);
         localStorage.setItem('_user', btoa(JSON.stringify(res)));
+        this.dbService.initRemoteDB();
         this.router.navigate(['/']);
         this.loading = false;
       }, err => {
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dbService: DbService,
     private accountService: AccountService,
     private msgService: NzMessageService,
     private router: Router) {}

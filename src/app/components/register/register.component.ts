@@ -1,8 +1,10 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
+
 import { NzMessageService } from 'ng-zorro-antd';
+import { AccountService } from 'src/app/services/account.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,8 @@ export class RegisterComponent implements OnInit {
   
   constructor(
     private router: Router,
-    private fb: FormBuilder,
+    private dbService: DbService,
+    private formBuilder: FormBuilder,
     private msgService: NzMessageService,
     private accountService: AccountService) {}
 
@@ -36,7 +39,8 @@ export class RegisterComponent implements OnInit {
     this.accountService.register(this.validateForm.value)
       .subscribe((res: any) => {
         this.accountService.currentUser.next(res);
-        localStorage.setItem('user', JSON.stringify(res));
+        localStorage.setItem('_user', btoa(JSON.stringify(res)));
+        this.dbService.initRemoteDB();
         this.router.navigate(['/']);
         this.loading = false;
       }, err => {
@@ -64,7 +68,7 @@ export class RegisterComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.validateForm = this.fb.group({
+    this.validateForm = this.formBuilder.group({
       email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
       confirmPassword: [null, [Validators.required, this.confirmationValidator]],

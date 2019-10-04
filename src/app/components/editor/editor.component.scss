@@ -17,21 +17,17 @@
   flex-flow: column nowrap;
 }
 
-::ng-deep .document-editor__toolbar {
-  z-index: 1;
-  box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.2);
+::ng-deep .ck.ck-toolbar {
+  // background: #ffffff;
+  padding: 0 var(--ck-spacing-small);
+  border: none;
   border-bottom: 1px solid var(--ck-color-toolbar-border);
-}
-
-::ng-deep .document-editor__editable-container {
-  // padding: calc(2 * var(--ck-spacing-large));
-  background: #fafafa00;
-  overflow-y: scroll;
 }
 
 ::ng-deep .document-editor__editable-container .ck-editor__editable {
   width: 100%;
   min-height: calc(100vh - 200px);
+  max-height: calc(100vh - 200px);
   padding: 1cm 2cm 2cm;
   // border: 1px hsl(0, 0%, 82.7%) solid;
   border-radius: var(--ck-border-radius);
@@ -60,6 +56,7 @@
   .note-title-input {
     border: 1px solid transparent;
     border-radius: 2px !important;
+    box-shadow: 0 0 0 2px rgba(0, 21, 41, 0.2);
     font-size: 18px;
     font-variant-ligatures: no-contextual;
     height: 20px;
@@ -72,6 +69,8 @@
 
   .note-title-label {
     cursor: pointer;
+    font-size: 18px;
+    line-height: 22px;
   }
 }
 
@@ -79,3 +78,6 @@
   float: right;
 }
 
+.note-container {
+  padding: 0 50px;
+}

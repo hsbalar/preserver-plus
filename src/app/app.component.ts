@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 import { DbService } from './services/db.service';
 import { AccountService } from './services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,11 @@ import { AccountService } from './services/account.service';
 })
 export class AppComponent {
 
-  constructor(private dbService: DbService, private accountService: AccountService) {
-    // this.init();
+  constructor(
+    private router: Router,
+    private dbService: DbService,
+    private accountService: AccountService) {
+    this.init();
   }
 
   init() {
@@ -19,6 +23,19 @@ export class AppComponent {
       this.accountService.currentUser.next(user);
     } catch (error) {}
     this.dbService.initDB();
+  }
+
+  logout() {
+    this.accountService.logout()
+      .subscribe(() => {
+        this.dbService.clearDatabase()
+        .then(() => {
+          this.dbService.initLocalDB();    
+          this.accountService.currentUser.next(null);
+          this.router.navigate(['/']);
+          localStorage.clear();
+          });
+      });
   }
 }
 

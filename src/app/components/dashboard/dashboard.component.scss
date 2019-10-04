@@ -2,11 +2,19 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  padding: 5px 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
+.search-bar {
+  display: flex;
+  padding: 15px 25px;
+  nz-input-group {
+    padding-right: 10px;
+  }
+}
 .main-content {
   width: 100%;
   flex: 1 0px;
@@ -25,15 +33,44 @@
   position: relative;
   width: 100%;
   top: 0;
+  .panel-title {
+    padding: 10px;
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .panel-actions {
+    color: #001528;
+    background: white;
+    transition: all .24s;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    opacity: 0;
+    i {
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+    i + i {
+      margin-left: 10px;
+    }
+  }
 }
-.panel-heading .panel-title {
-  padding: 10px;
-  margin: 0;
+
+.panel-heading:hover, .panel-body:hover {
+  .panel-actions {
+    opacity: 1;
+  }
 }
 
 .panel-body {
   overflow: auto;
-  padding: 0 10px 10px;
+  padding: 10px;
   position: absolute;
   top: 37px;
   bottom: 0;

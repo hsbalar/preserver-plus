@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { AccountService } from './account.service';
 import { isEmpty } from 'lodash';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,13 @@ export class DbService {
 
   public db: any;
   public remoteDb: any;
+  public sync: boolean = false;
   public list: any = [];
+  public updatedList = new BehaviorSubject([]);
 
   constructor(private accountService: AccountService) {}
 
-  initDB() {
+  initDB() {    
     if (this.accountService.user)
       this.initRemoteDB();
     else
@@ -24,12 +27,13 @@ export class DbService {
   initLocalDB() {
     console.log('local db initilize..');
     this.db = new PouchDB('local-preserver');
+    this.getList();
   }
 
   initRemoteDB() {
     console.log('remote db initilize..');
     this.db = new PouchDB('preserver');
-    this.remoteDb = this.accountService.user.userDBs.bb;
+    this.remoteDb = this.accountService.user.userDBs.preserver;
 
     let options = {
       live: true,
@@ -38,22 +42,24 @@ export class DbService {
     };
 
     this.db.sync(this.remoteDb, options);
-
-    this.getList();
+    this.sync = true;
+    setTimeout(() => {
+      this.getList();
+    }, 1000);
   }
 
   clearDatabase() {
-    this.db.destroy().then(() => {
+    return this.db.destroy().then(() => {
       console.log("remote db removed..");
     });
   }
 
   getList() {
-    if (!isEmpty(this.list)) {
-      return Promise.resolve(this.list);
-    }
+    // if (!isEmpty(this.list)) {
+    //   return Promise.resolve(this.list);
+    // }
 
-    return new Promise(resolve => {
+    // return new Promise(resolve => {
       this.db.allDocs({
         include_docs: true
       }).then((result) => {
@@ -61,13 +67,16 @@ export class DbService {
         let docs = result.rows.map((row) => {
           this.list.push(row.doc);
         });
+        this.updatedList.next(this.list);
+        this.sync = false;        
         this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
           this.handleChange(change);
         });
       }).catch((error) => {
         console.log(error);
       });
-    });
+    // });
+    
   }
 
   getById(id: any) {
@@ -111,6 +120,7 @@ export class DbService {
         this.list.push(change.doc);
       }
     }
+    this.updatedList.next(this.list);
   }
 
   stripHtml(html: string) {

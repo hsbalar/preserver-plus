@@ -1,22 +1,40 @@
-<div class="note-title">
-    <label *ngIf='!editMode' (click)='editMode=true' class='note-title-label'>{{title}}</label>
-    <input nz-input *ngIf='editMode' [(ngModel)]='title' class='note-title-input'
-      autofocus (keydown.enter)='$event.target.blur()' (focusout)="editMode=false">
-    <span class="action">
-      <button nz-button nzType="dashed" [nzSize]="'small'">
-        <i nz-icon nzType="arrow-left" nzTheme="outline"></i>Back
-      </button>
-    </span>
-</div>
-<div class="document-editor">
-  <div class="document-editor__toolbar"></div>
-  <div class="document-editor__editable-container">
-    <div class="document-editor__editable">
-      <ckeditor
-        [editor]="Editor"
-        [(ngModel)]="text"
-        (ready)="onReady($event)"
-      ></ckeditor>
+<div class="note-container">
+  <form [formGroup]="form">
+    <div class="note-title">
+      <label
+        *ngIf="!editMode"
+        (click)="editTitleClick()"
+        class="note-title-label"
+        >{{ form.get("title").value }}</label
+      >
+      <input
+        nz-input
+        autofocus
+        #inputTitle
+        *ngIf="editMode"
+        formControlName="title"
+        class="note-title-input"
+        (keydown.esc)="$event.target.blur()"
+        (keydown.enter)="$event.target.blur()"
+        (focus)="$event.target.select()"
+        (focusout)="editMode = false"
+      />
+      <span class="action">
+        <button nz-button nzType="dashed" [nzSize]="'small'">
+          <i nz-icon nzType="arrow-left" nzTheme="outline"></i>Back
+        </button>
+      </span>
     </div>
-  </div>
+    <div class="document-editor">
+      <div class="document-editor__editable-container">
+        <div class="document-editor__editable">
+          <ckeditor
+            [editor]="editor"
+            formControlName="content"
+            (ready)="onReady($event)"
+          ></ckeditor>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

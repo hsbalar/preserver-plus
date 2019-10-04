@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
+
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-editor',
@@ -8,31 +12,57 @@ import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 })
 export class EditorComponent implements OnInit {
 
-  public editor: any;
-  title = 'Untitled name';
-  editMode: boolean = false;
-  constructor() { }
+  public editor: any = DecoupledEditor;
+  public editMode: boolean = false;
+  public form: FormGroup;
+  @ViewChild('editTitle', { static: true }) titleEle: ElementRef;
+
+  constructor(
+    public cd: ChangeDetectorRef,
+    public dbService: DbService,
+    public formBuilder: FormBuilder) { }
   
   ngOnInit() {
-    DecoupledEditor
-    .create( document.querySelector( '.document-editor__editable' ), {
-      cloudServices: {}
-    } )
-    .then(editor => {
-        const toolbarContainer = document.querySelector( '.document-editor__toolbar' );
-        toolbarContainer.appendChild( editor.ui.view.toolbar.element );
-        this.editor = editor;
-    })
-    .catch(err => {
-        console.error( err );
+    this.initForm();
+
+    this.form.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(formData => {
+      console.log("form changes...");
+      this.saveChanges()
     });
   }
-  text = `<p>Hello, world!</p>`;
 
-  public onReady(editor) {
+  onReady(editor) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
     );
+  }
+
+  saveChanges() {
+    this.dbService.save(this.form.value)
+      .then((res: any) => {
+        this.form.get('_id').setValue(res.id, {emitEvent: false});
+        this.form.get('_rev').setValue(res.rev, {emitEvent: false});
+      });
+  }
+
+  initForm() {
+    this.form = this.formBuilder.group({
+      _id: null,
+      _rev: null,
+      title: ['Unitited name', Validators.required], 
+      content: ['', Validators.required]
+    });
+  }
+
+  editTitleClick() {
+    this.editMode = true;
+    
+    setTimeout(() => {
+      this.titleEle.nativeElement.focus();
+    }, 0);
   }
 }

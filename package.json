@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -18,7 +18,9 @@
     "@angular/forms": "~8.2.3",
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
+    "@angular/pwa": "^0.803.8",
     "@angular/router": "~8.2.3",
+    "@angular/service-worker": "~8.2.3",
     "@ckeditor/ckeditor5-angular": "^1.1.0",
     "@ckeditor/ckeditor5-build-classic": "^12.4.0",
     "@ckeditor/ckeditor5-build-decoupled-document": "^12.4.0",

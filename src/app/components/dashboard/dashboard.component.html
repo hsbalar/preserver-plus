@@ -1,12 +1,23 @@
 <div class="search-bar">
-  <nz-input-group [nzPrefix]="prefixTemplate">
-    <input type="text" nz-input placeholder="Search..." />
+  <nz-input-group [nzPrefix]="prefixTemplate" [nzSuffix]="suffixTemplate">
+    <input type="text" nz-input placeholder="Search..." [formControl]="searchDraft"/>
   </nz-input-group>
   <ng-template #prefixTemplate><i nz-icon nzType="search"></i></ng-template>
-  <button nz-button [nzSize]="size" nzType="dashed" routerLink="/edit"><i nz-icon nzType="plus"></i>New</button>
+  <ng-template #suffixTemplate
+    ><i
+      nz-icon
+      nz-tooltip
+      class="ant-input-clear-icon"
+      nzTheme="fill"
+      nzType="close-circle"
+      *ngIf="searchDraft.value"
+      (click)="searchDraft.setValue(null)"
+    ></i
+  ></ng-template>
+  <button nz-button nzType="dashed" routerLink="/editor"><i nz-icon nzType="plus"></i>New</button>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="data.length > 0">
   <div class="main-content">
     <ngx-gridster
       [options]="gridsterOptions"
@@ -31,27 +42,16 @@
         <div class="panel-heading">
           <h5 class="panel-title">{{ row.title }}</h5>
           <span class="panel-actions">
-            <i nz-icon nzType="edit"></i>
-            <i nz-icon nzType="delete"></i>
+            <a href="#" (click)="editNote($event, row)" title="Edit"><i nz-icon nzType="edit"></i></a>
+            <a href="#" (click)="deleteNote($event, row)" title="Delete"><i nz-icon nzType="delete"></i></a>
           </span>
         </div>
 
-        <div class="panel-body">
-          <div [innerHTML]="row.content"></div>
-        </div>
+        <div class="panel-body" [innerHTML]="row.content"></div>
       </ngx-gridster-item>
     </ngx-gridster>
   </div>
 </div>
-
-<!-- <nz-list [nzDataSource]="data" [nzRenderItem]="item" [nzGrid]="{ gutter: 16, xs: 24, sm: 12, md: 6, lg: 6, xl: 4 }">
-  <ng-template #item let-item>
-    <nz-list-item [nzContent]="nzContent">
-      <ng-template #nzContent>
-        <nz-card [nzTitle]="item.title">
-          {{item.content}}
-        </nz-card>
-      </ng-template>
-    </nz-list-item>
-  </ng-template>
-</nz-list> -->
+<div *ngIf="data.length == 0" class="empty">
+  <nz-empty></nz-empty>
+</div>

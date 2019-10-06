@@ -1,13 +1,18 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { DbService } from 'src/app/services/db.service';
 import { GridsterComponent, IGridsterOptions, IGridsterDraggableOptions } from 'angular2gridster';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { AccountService } from 'src/app/services/account.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   data: any = [];
   widget: any = {
@@ -16,18 +21,8 @@ export class DashboardComponent implements OnInit {
     dragAndDrop: true,
     resizable: true
   }
-  constructor(
-    public cd: ChangeDetectorRef,
-    public dbService: DbService
-  ) { }
-
-  ngOnInit() {
-    this.dbService.updatedList.subscribe((list) => {
-      console.log(list);
-      this.data = list;
-      this.cd.detectChanges();
-    });
-  }
+  searchDraft = new FormControl();
+  subscription: Subscription;
 
   static X_PROPERTY_MAP: any = {
     sm: 'xSm',
@@ -56,6 +51,13 @@ export class DashboardComponent implements OnInit {
     lg: 'hLg',
     xl: 'hXl'
   };
+
+  constructor(
+    public cd: ChangeDetectorRef,
+    public accountService: AccountService,
+    public router: Router,
+    public dbService: DbService
+  ) { }
 
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   itemOptions = {
@@ -88,7 +90,7 @@ export class DashboardComponent implements OnInit {
     responsiveOptions: [
       {
         breakpoint: 'sm',
-        // minWidth: 480,
+        minWidth: 480,
         lanes: 3
       },
       {
@@ -108,12 +110,28 @@ export class DashboardComponent implements OnInit {
       }
     ]
   };
+
   gridsterDraggableOptions: IGridsterDraggableOptions = {
     handlerClass: 'panel-heading'
   };
-  onReflow(event) {
-    console.log('onReflow', event);
+
+  ngOnInit() {
+    this.subscription = this.dbService.updatedList.subscribe((list) => {
+      this.data = list;
+      this.cd.detectChanges();
+    });
+
+    this.searchDraft.valueChanges
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(newValue => {
+        this.filterNotes(newValue);
+      });
   }
+
+  onReflow(event: any) {}
 
   removeLine(gridster: GridsterComponent) {
     gridster.setOption('lanes', --this.gridsterOptions.lanes)
@@ -135,9 +153,7 @@ export class DashboardComponent implements OnInit {
       newWidth = 1;
     }
     widget[DashboardComponent.W_PROPERTY_MAP[breakpoint] || 'w'] = newWidth;
-
     gridster.reload();
-
     return false;
   }
 
@@ -151,52 +167,17 @@ export class DashboardComponent implements OnInit {
       newHeight = 1;
     }
     widget[DashboardComponent.H_PROPERTY_MAP[breakpoint] || 'h'] = newHeight;
-
     gridster.reload();
-
     return false;
   }
 
   optionsChange(options: IGridsterOptions) {
     this.gridsterOptions = options;
-    console.log('options change:', options);
   }
 
-  itemChange($event: any, gridster) {
-    console.log('item change', $event);
-  }
+  itemChange($event: any, gridster: any) {}
 
-  // swap() {
-  //   this.widgets[0].x = 3;
-  //   this.widgets[3].x = 0;
-  // }
-
-  addWidgetFromDrag(gridster: GridsterComponent, event: any) {
-    const item = event.item;
-    const breakpoint = gridster.options.breakpoint;
-    const widget = {
-      dragAndDrop: true,
-      resizable: true,
-      title: 'New widget'
-    };
-
-    widget[DashboardComponent.W_PROPERTY_MAP[breakpoint] || 'w'] = item.w;
-    widget[DashboardComponent.H_PROPERTY_MAP[breakpoint] || 'h'] = item.h;
-    widget[DashboardComponent.X_PROPERTY_MAP[breakpoint] || 'x'] = item.x;
-    widget[DashboardComponent.Y_PROPERTY_MAP[breakpoint] || 'y'] = item.y;
-
-    for (const rwdProp of ['wSm', 'hSm', 'wMd', 'hMd', 'wLg', 'hLg', 'wXl', 'hXl']) {
-      if (event.item.itemPrototype.hasOwnProperty(rwdProp)) {
-        widget[rwdProp] = event.item.itemPrototype[rwdProp];
-      }
-    }
-
-    // this.widgets.push(widget);
-
-    console.log('add widget from drag to:', gridster);
-  }
-
-  over(event) {
+  over(event: any) {
     const size = event.item.calculateSize(event.gridster);
 
     event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.width = size.width + 'px';
@@ -204,9 +185,38 @@ export class DashboardComponent implements OnInit {
     event.item.itemPrototype.$element.classList.add('is-over');
   }
 
-  out(event) {
+  out(event: any) {
     event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.width = '';
     event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.height = '';
     event.item.itemPrototype.$element.classList.remove('is-over');
+  }
+
+  deleteNote(e: Event, note: any) {
+    e.preventDefault();
+    this.dbService.delete(note);
+  }
+
+  editNote(e: Event, note: any) {
+    e.preventDefault();
+    this.accountService.edit = note;
+    this.router.navigateByUrl('editor');
+  }
+
+  filterNotes(searchTerm: string) {
+    if (searchTerm) {
+      let results = [];
+      this.data.forEach(el => {
+        if ((el.title && el.title.toLowerCase().includes(searchTerm.trim().toLowerCase())) || (el.content && el.content.toLowerCase().includes(searchTerm.trim().toLowerCase()))) {
+          results.push(el);
+        }
+      });
+      this.data = results;
+    } else {
+      this.data = this.dbService.list;
+    }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

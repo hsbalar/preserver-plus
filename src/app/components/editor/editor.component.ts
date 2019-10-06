@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { DbService } from 'src/app/services/db.service';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-editor',
@@ -15,10 +16,13 @@ export class EditorComponent implements OnInit {
   public editor: any = DecoupledEditor;
   public editMode: boolean = false;
   public form: FormGroup;
-  @ViewChild('editTitle', { static: true }) titleEle: ElementRef;
+
+  @ViewChild('editTitle', { read: ElementRef, static: true })
+  public titleEle: ElementRef;
 
   constructor(
     public cd: ChangeDetectorRef,
+    public accountService: AccountService,
     public dbService: DbService,
     public formBuilder: FormBuilder) { }
   
@@ -28,13 +32,17 @@ export class EditorComponent implements OnInit {
     this.form.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged()
-    ).subscribe(formData => {
+    ).subscribe(formData => {      
       console.log("form changes...");
       this.saveChanges()
     });
+
+    if (this.accountService.edit && this.accountService.edit._id) {
+      this.patchFormData(this.accountService.edit);
+    }
   }
 
-  onReady(editor) {
+  onReady(editor: any) {
     editor.ui.getEditableElement().parentElement.insertBefore(
       editor.ui.view.toolbar.element,
       editor.ui.getEditableElement()
@@ -49,20 +57,35 @@ export class EditorComponent implements OnInit {
       });
   }
 
+  patchFormData(data: any = {}) {
+    this.form.get('_id').setValue(data._id || null, {onlySelf: true, emitEvent: false});
+    this.form.get('_rev').setValue(data._rev || null, {onlySelf: true, emitEvent: false});
+    this.form.get('title').setValue(data.title || 'Untitled Name', {onlySelf: true, emitEvent: false});
+    this.form.get('content').setValue(data.content || '', {onlySelf: true, emitEvent: false});
+  }
+
   initForm() {
     this.form = this.formBuilder.group({
       _id: null,
       _rev: null,
-      title: ['Unitited name', Validators.required], 
-      content: ['', Validators.required]
+      title: ['Untitled Name'], 
+      content: ['']
     });
+  }
+
+  onBlurTitle(e: Event) {
+    this.editMode = false;
+    if (!this.form.get('title').value.trim()) {
+      this.form.get('title').setValue('Untitled Name');
+    }
   }
 
   editTitleClick() {
     this.editMode = true;
-    
-    setTimeout(() => {
-      this.titleEle.nativeElement.focus();
-    }, 0);
+  }
+
+  newNoteClick() {
+    this.accountService.edit = null;
+    this.patchFormData();
   }
 }

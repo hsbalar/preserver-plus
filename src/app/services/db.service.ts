@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { AccountService } from './account.service';
-import { isEmpty } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -55,28 +54,21 @@ export class DbService {
   }
 
   getList() {
-    // if (!isEmpty(this.list)) {
-    //   return Promise.resolve(this.list);
-    // }
-
-    // return new Promise(resolve => {
-      this.db.allDocs({
-        include_docs: true
-      }).then((result) => {
-        this.list = [];
-        let docs = result.rows.map((row) => {
-          this.list.push(row.doc);
-        });
-        this.updatedList.next(this.list);
-        this.sync = false;        
-        this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-          this.handleChange(change);
-        });
-      }).catch((error) => {
-        console.log(error);
+    this.db.allDocs({
+      include_docs: true
+    }).then((result) => {
+      this.list = [];
+      let docs = result.rows.map((row) => {
+        this.list.push(row.doc);
       });
-    // });
-    
+      this.updatedList.next(this.list);
+      this.sync = false;        
+      this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+        this.handleChange(change);
+      });
+    }).catch((error) => {
+      console.log(error);
+    });    
   }
 
   getById(id: any) {
@@ -121,11 +113,5 @@ export class DbService {
       }
     }
     this.updatedList.next(this.list);
-  }
-
-  stripHtml(html: string) {
-    var tmp = document.createElement("DIV");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
   }
 }

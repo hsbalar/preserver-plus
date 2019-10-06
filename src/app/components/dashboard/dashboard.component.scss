@@ -1,6 +1,6 @@
 .container {
   position: absolute;
-  height: 100%;
+  height: calc(100vh - 126px);
   width: 100%;
   padding: 5px 20px;
   overflow: hidden;
@@ -13,8 +13,12 @@
   padding: 15px 25px;
   nz-input-group {
     padding-right: 10px;
+    input {
+      background: #f0f0f0;
+    }
   }
 }
+
 .main-content {
   width: 100%;
   flex: 1 0px;
@@ -49,17 +53,21 @@
     right: 10px;
     top: 8px;
     opacity: 0;
-    i {
+    a {
       font-size: 14px;
       line-height: 20px;
       text-align: center;
       border-radius: 20px;
       cursor: pointer;
     }
-    i + i {
+    a + a {
       margin-left: 10px;
     }
   }
+}
+
+.empty {
+  padding: 100px;
 }
 
 .panel-heading:hover, .panel-body:hover {
@@ -137,6 +145,9 @@
   transition: background 3s;
   border-radius: 3px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  p {
+    margin-bottom: 0.2em;
+  }
 }
 
 ::ng-deep .is-dragging .gridster-item-inner {
@@ -158,4 +169,8 @@
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   cursor: pointer;
+}
+
+::ng-deep .ant-input-affix-wrapper .ant-input-suffix {
+  right: 22px;
 }

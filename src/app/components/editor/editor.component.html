@@ -5,23 +5,27 @@
         *ngIf="!editMode"
         (click)="editTitleClick()"
         class="note-title-label"
+        title="Edit"
         >{{ form.get("title").value }}</label
       >
       <input
         nz-input
         autofocus
-        #inputTitle
+        #editTitle
         *ngIf="editMode"
         formControlName="title"
         class="note-title-input"
-        (keydown.esc)="$event.target.blur()"
-        (keydown.enter)="$event.target.blur()"
+        (keydown.esc)="onBlurTitle($event)"
+        (keydown.enter)="onBlurTitle($event)"
         (focus)="$event.target.select()"
-        (focusout)="editMode = false"
+        (focusout)="onBlurTitle($event)"
       />
       <span class="action">
-        <button nz-button nzType="dashed" [nzSize]="'small'">
-          <i nz-icon nzType="arrow-left" nzTheme="outline"></i>Back
+        <button nz-button nzType="dashed" routerLink="/">
+          <i nz-icon nzType="appstore" nzTheme="outline"></i>My Notes
+        </button>
+        <button nz-button nzType="dashed" (click)="newNoteClick()">
+          <i nz-icon nzType="plus" nzTheme="outline"></i>New
         </button>
       </span>
     </div>

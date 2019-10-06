@@ -14,23 +14,15 @@ svg#clouds {
   text-decoration: none;
 }
 
+.logo a span {
+  position: absolute;
+  top: -8px;
+}
+
 .header-action {
   float: right;
   a {
     color: white;
     font-family: monospace;
   }
-}
-
-[nz-menu] {
-  line-height: 64px;
-}
-
-[nz-icon] {
-  margin-right: 6px;
-  font-size: 24px;
-}
-
-nz-footer {
-  text-align: center;
 }

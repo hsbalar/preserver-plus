@@ -11,9 +11,9 @@ import { Router } from '@angular/router';
 export class AppComponent {
 
   constructor(
-    private router: Router,
-    private dbService: DbService,
-    private accountService: AccountService) {
+    public router: Router,
+    public dbService: DbService,
+    public accountService: AccountService) {
     this.init();
   }
 

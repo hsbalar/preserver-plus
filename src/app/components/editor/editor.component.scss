@@ -52,16 +52,12 @@
 
 .note-title {
   margin: 16px 0;
-  
+  line-height: 32px;
+
   .note-title-input {
-    border: 1px solid transparent;
-    border-radius: 2px !important;
-    box-shadow: 0 0 0 2px rgba(0, 21, 41, 0.2);
     font-size: 18px;
     font-variant-ligatures: no-contextual;
-    height: 20px;
     width: 500px;
-    line-height: 22px;
     margin: 0;
     min-width: 1px;
     padding: 2px 7px;
@@ -71,11 +67,23 @@
     cursor: pointer;
     font-size: 18px;
     line-height: 22px;
+    padding: 3px 8px;
+  }
+
+  .note-title-label:hover {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px rgba(0, 21, 41, 0.2)
   }
 }
 
-.note-title .action {
-  float: right;
+.note-title {
+  .action {
+    float: right;
+    [nz-button] {
+      margin-left: 8px;
+    }
+  }
 }
 
 .note-container {

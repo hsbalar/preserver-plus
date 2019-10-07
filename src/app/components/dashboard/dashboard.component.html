@@ -14,7 +14,7 @@
       (click)="searchDraft.setValue(null)"
     ></i
   ></ng-template>
-  <button nz-button nzType="dashed" routerLink="/editor"><i nz-icon nzType="plus"></i>New</button>
+  <button nz-button nzType="dashed" (click)="editNote($event, null)"><i nz-icon nzType="plus"></i>New</button>
 </div>
 
 <div class="container" *ngIf="data.length > 0">

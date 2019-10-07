@@ -23,6 +23,23 @@ import { JwtInterceptor } from './services/jwt.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import { IconDefinition } from '@ant-design/icons-angular';
+import { NzIconModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd/icon';
+import { LogoutOutline, 
+  DeleteFill, EditFill, 
+  LoginOutline, DeleteOutline, 
+  PlusOutline, AppstoreOutline, 
+  UserOutline, LockOutline,
+  SearchOutline } from '@ant-design/icons-angular/icons';
+
+const icons: IconDefinition[] = [
+  LogoutOutline, DeleteFill, 
+  EditFill, LoginOutline, 
+  DeleteOutline, PlusOutline, 
+  UserOutline, LockOutline,
+  AppstoreOutline, SearchOutline
+];
+
 registerLocaleData(en);
 
 @NgModule({
@@ -43,12 +60,15 @@ registerLocaleData(en);
     GridsterModule.forRoot(),
     NgZorroAntdModule,
     HttpClientModule,
+    NzIconModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: NZ_ICON_DEFAULT_TWOTONE_COLOR, useValue: '#00ff00' },
+    { provide: NZ_ICONS, useValue: icons },
     AuthGuard
   ],
   bootstrap: [AppComponent]

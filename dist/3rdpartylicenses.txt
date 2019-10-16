@@ -240,8 +240,6 @@ PERFORMANCE OF THIS SOFTWARE.
 ng-zorro-antd
 MIT
 
-ng-zorro-antd/alert
-
 ng-zorro-antd/avatar
 
 ng-zorro-antd/button

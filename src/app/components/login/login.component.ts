@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
 
-    if (this.validateForm.invalid) return;
+    if (this.validateForm.invalid || this.loading) return;
     this.loading = true;
     this.accountService.login(this.validateForm.value)
       .subscribe((res: any) => {
@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
       }, err => {
         this.error = true;
         this.loading = false;
-        this.msgService.error(err.error.message);
+        if (err.error && err.error.message)
+          this.msgService.error(err.error.message);
       });
   }
 

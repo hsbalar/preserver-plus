@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
 import { AccountService } from './account.service';
 import { BehaviorSubject } from 'rxjs';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,11 @@ export class DbService {
   public sync: boolean = false;
   public list: any = [];
   public updatedList = new BehaviorSubject([]);
+  public notificationId = null;
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private message: NzMessageService,
+    private accountService: AccountService) {}
 
   initDB() {    
     if (this.accountService.user)
@@ -42,6 +46,7 @@ export class DbService {
 
     this.db.sync(this.remoteDb, options);
     this.sync = true;
+    this.showLoadingNotification();
     setTimeout(() => {
       this.getList();
     }, 1000);
@@ -56,14 +61,15 @@ export class DbService {
   getList() {
     this.db.allDocs({
       include_docs: true
-    }).then((result) => {
+    }).then((result: any) => {
       this.list = [];
       let docs = result.rows.map((row) => {
         this.list.push(row.doc);
       });
+      this.sync = false;
+      this.removeLoadingNotification();   
       this.updatedList.next(this.list);
-      this.sync = false;        
-      this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
+      this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change: any) => {
         this.handleChange(change);
       });
     }).catch((error) => {
@@ -112,6 +118,15 @@ export class DbService {
         this.list.push(change.doc);
       }
     }
+    setTimeout(() => this.sync = false, 50);
     this.updatedList.next(this.list);
+  }
+
+  showLoadingNotification() {
+    this.notificationId = this.message.loading('Initializing notes...', { nzDuration: 0 }).messageId;
+  }
+  
+  removeLoadingNotification() {
+    this.message.remove(this.notificationId);
   }
 }

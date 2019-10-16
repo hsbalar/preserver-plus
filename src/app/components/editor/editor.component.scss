@@ -28,7 +28,7 @@
   width: 100%;
   min-height: calc(100vh - 200px);
   max-height: calc(100vh - 200px);
-  padding: 1cm 2cm 2cm;
+  padding: 2em 3em;
   // border: 1px hsl(0, 0%, 82.7%) solid;
   border-radius: var(--ck-border-radius);
   background: #ffffff00;
@@ -88,4 +88,9 @@
 
 .note-container {
   padding: 0 50px;
+}
+
+.save-notes-indication {
+  color: rgba(0, 0, 0, 0.45);
+  font-style: italic;
 }

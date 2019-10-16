@@ -27,14 +27,13 @@ export class AppComponent {
 
   logout() {
     this.accountService.logout()
-      .subscribe(() => {
-        this.dbService.clearDatabase()
-        .then(() => {
-          this.dbService.initLocalDB();    
-          this.accountService.currentUser.next(null);
-          this.router.navigate(['/']);
-          localStorage.clear();
-          });
+      .subscribe(() => console.log('logged out'));
+    this.dbService.clearDatabase()
+      .then(() => {
+        this.dbService.initLocalDB();    
+        this.accountService.currentUser.next(null);
+        this.router.navigate(['/']);
+        localStorage.clear();
       });
   }
 }

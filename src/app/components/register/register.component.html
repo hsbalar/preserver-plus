@@ -60,21 +60,9 @@
     </nz-form-control>
   </nz-form-item> -->
 
-  <nz-form-item nz-row class="register-area" *ngIf="error">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <nz-alert nzType="error" [nzMessage]="errorTemplate" nzShowIcon>
-        <ng-template #errorTemplate>
-          <div *ngIf="errorInfo.validationErrors.email">- {{errorInfo?.validationErrors?.email[0]}}</div>
-          <div *ngIf="errorInfo.validationErrors.password">- {{errorInfo?.validationErrors?.password[0]}}</div>
-          <div *ngIf="errorInfo.validationErrors.username">- {{errorInfo?.validationErrors?.username[0]}}</div>
-        </ng-template>
-      </nz-alert>
-    </nz-form-control>
-  </nz-form-item>
-
   <nz-form-item nz-row class="register-area">
     <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary">Register</button>
+      <button nz-button nzType="primary" [nzLoading]="loading">Register</button>
       Or
       <a routerLink="/login">login!</a>
     </nz-form-control>

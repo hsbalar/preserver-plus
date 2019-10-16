@@ -21,10 +21,16 @@
         (focusout)="onBlurTitle($event)"
       />
       <span class="action">
-        <button nz-button nzType="dashed" routerLink="/">
+        <label class="save-notes-indication" *ngIf="isSaving">
+          <span *ngIf="isSaving == 'false'; else saving">All Changes Saved</span>
+        </label>
+        <ng-template #saving>
+            <i nz-icon [nzType]="'sync'" [nzSpin]="true"></i> Saving...
+        </ng-template>
+        <button nz-button nzType="dashed" type="button" routerLink="/">
           <i nz-icon nzType="appstore" nzTheme="outline"></i>My Notes
         </button>
-        <button nz-button nzType="dashed" (click)="newNoteClick()">
+        <button nz-button nzType="dashed" type="button" (click)="newNoteClick()">
           <i nz-icon nzType="plus" nzTheme="outline"></i>New
         </button>
       </span>

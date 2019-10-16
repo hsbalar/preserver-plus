@@ -29,7 +29,7 @@ import { LogoutOutline,
   DeleteFill, EditFill, 
   LoginOutline, DeleteOutline, 
   PlusOutline, AppstoreOutline, 
-  UserOutline, LockOutline,
+  UserOutline, LockOutline, SyncOutline,
   SearchOutline } from '@ant-design/icons-angular/icons';
 
 const icons: IconDefinition[] = [
@@ -37,7 +37,8 @@ const icons: IconDefinition[] = [
   EditFill, LoginOutline, 
   DeleteOutline, PlusOutline, 
   UserOutline, LockOutline,
-  AppstoreOutline, SearchOutline
+  AppstoreOutline, SearchOutline,
+  SyncOutline
 ];
 
 registerLocaleData(en);

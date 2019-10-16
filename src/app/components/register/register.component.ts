@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { } from 'lodash';
 
 import { NzMessageService } from 'ng-zorro-antd';
 import { AccountService } from 'src/app/services/account.service';
@@ -15,8 +16,6 @@ export class RegisterComponent implements OnInit {
   
   validateForm: FormGroup;
   loading: boolean = false;
-  error: boolean = false;
-  errorInfo: any = {};
   
   constructor(
     private router: Router,
@@ -31,11 +30,9 @@ export class RegisterComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
 
-    if (this.validateForm.invalid) return;
+    if (this.validateForm.invalid || this.loading) return;
 
     this.loading = true;
-    this.error = false;
-
     this.accountService.register(this.validateForm.value)
       .subscribe((res: any) => {
         this.accountService.currentUser.next(res);
@@ -45,9 +42,11 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
       }, err => {
         this.loading = false;
-        this.error = true;
-        this.errorInfo = err.error;
-        this.msgService.error(this.errorInfo.error);
+        if (err.error && err.error.validationErrors) {
+          for (let key in err.error.validationErrors) {
+            this.msgService.error(err.error.validationErrors[key][0]);
+          }
+        }
       });
 
   }

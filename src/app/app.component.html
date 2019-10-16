@@ -2,8 +2,7 @@
   <nz-header>
     <div class="logo"><a href="#" routerLink="/">Preserver<span>+</span></a></div>
     <div class="header-action" *ngIf="accountService.user; else userNotLogin">
-      <!-- <i nz-icon [nzType]="'sync'" [nzSpin]="dbService.sync"></i> -->
-      <nz-avatar nzIcon="user" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+      <nz-avatar nzIcon="user" [nzSize]="26" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
       <a nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
         {{accountService?.user?.user_id}} <i nz-icon nzType="down"></i>
       </a>

@@ -49,6 +49,7 @@ export class EditorComponent implements OnInit {
       editor.ui.getEditableElement()
     );
     editor.editing.view.focus();
+    editor.config.forcePasteAsPlainText = true;
   }
 
   saveChanges() {

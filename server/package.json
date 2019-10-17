@@ -1,0 +1,23 @@
+{
+  "name": "auth-server",
+  "version": "0.1.0",
+  "description": "A Node.js app using Express 4",
+  "engines": {
+    "node": "5.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@sensu/superlogin": "^1.2.1",
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.0",
+    "del": "2.2.0",
+    "express": "^4.14.0",
+    "http": "0.0.0",
+    "method-override": "^2.3.6",
+    "morgan": "^1.7.0",
+    "superlogin": "^0.6.1"
+  }
+}

@@ -1,27 +1,67 @@
-# PreserverPlusApp
+# Preserver Plus
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.0.
+Minimal notes app with rich text formatting.
 
-## Development server
+## What it is behind the app ?
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This app is built using `Angular` platform with `PouchDB` to storing your local data on browser and `CouchDB` to sync notes with your account.
+  - That's part of fun setting up a bi-directional and continuous replication, so as soon as we make a change to our local data it will be reflected in the remote database, and as soon as we make a change to the remote data it will be replicated in the local data. So wherever your have logged in will sync up with immediatly.
+  - :memo: To create a note `CKEditor5` document editor is configured.
+  - :book: For listing down all notes in dashboard I've used `Angular2gridster` which helps to provide easy configurable and manageable grid layout.
+  - :sunrise_over_mountains: And last thing `Ant Design` for Angular is a set of high quality components and rich, interactive user interfaces.
+  - :no_mouth: Opps... wait what about authentication & signup yeahh the core part, don't forget :point_right: For that I've used `Superlogin` package a Powerful authentication for APIs and single page apps using the CouchDB.
+  - We just need to setup `NodeJS` server, all big task like creation of private db for user, registration, authentication, logout, forgot password many more... all will be taken care by superlogin, We just need to make express instance up & running with couchdb configurations. 
+  - Cool... I think I'm done :sunglasses:.
+  - One more thing It's `PWA`, a service worker is a script that runs in the web browser and manages caching for an application. Done not much... :speak_no_evil: ...
 
-## Code scaffolding
+## Key Features
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* Rich text editor.
+* Online/Offline sync with your account.
+* WYSIWYG notes.
+* Syntax highlighting.
+* Toolbar for text formatting.
+* Local db and Remote db.
+* PWA (Progressive web app).
 
-## Build
+## Running the app locally
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+```bash
+# Clone repo
+$ git clone https://github.com/hsbalar/preserver-plus.git
 
-## Running unit tests
+# Go into this repository
+$ cd preserver-plus
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Install dependencies
+$ npm install
 
-## Running end-to-end tests
+# Run the app
+$ npm start
+```
+Angular app will be listen on `localhost:4200`.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Running node server
 
-## Further help
+```bash
+# Go into this repository
+$ cd server/
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+# Install dependencies
+$ npm install
+
+# Run the app
+$ npm start
+```
+Node server will be listen on `localhost:4000`.
+
+## License
+
+MIT
+
+---
+
+> [hiteshbalar.com](https://www.hiteshbalar.com) &nbsp;&middot;&nbsp;
+> GitHub [@hsbalar](https://github.com/hsbalar) &nbsp;&middot;&nbsp;
+
+

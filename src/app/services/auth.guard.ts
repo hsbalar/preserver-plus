@@ -13,14 +13,13 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     return new Observable((observer: Observer<boolean>) => {
-      if (this.accountService.isAuthenticated()) {
+      const isAuthenticated = this.accountService.isAuthenticated();
+      if (isAuthenticated) {
+        // authenticated, redirect to home
         this.router.navigate(['/']);
-        observer.next(false);
-        observer.complete();
-      } else {
-        observer.next(true);
-        observer.complete();      
       }
+      observer.next(!isAuthenticated);
+      observer.complete();
     });
   }
 }

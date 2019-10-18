@@ -25,7 +25,7 @@ import { environment } from '../environments/environment';
 
 import { IconDefinition } from '@ant-design/icons-angular';
 import { NzIconModule, NZ_ICON_DEFAULT_TWOTONE_COLOR, NZ_ICONS } from 'ng-zorro-antd/icon';
-import { LogoutOutline, 
+import { LogoutOutline, GithubOutline,
   DeleteFill, EditFill, 
   LoginOutline, DeleteOutline, 
   PlusOutline, AppstoreOutline, 
@@ -38,7 +38,7 @@ const icons: IconDefinition[] = [
   DeleteOutline, PlusOutline, 
   UserOutline, LockOutline,
   AppstoreOutline, SearchOutline,
-  SyncOutline
+  SyncOutline, GithubOutline
 ];
 
 registerLocaleData(en);

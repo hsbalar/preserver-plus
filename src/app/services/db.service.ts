@@ -98,20 +98,12 @@ export class DbService {
   }
 
   handleChange(change) {
-    let changedDoc = null;
-    let changedIndex = null;
-    this.list.forEach((doc, index) => {
-      if (doc._id === change.id) {
-        changedDoc = doc;
-        changedIndex = index;
-      }
-    });
-
+    const changedIndex = this.list.findIndex((doc) => doc._id === change.id);
     if (change.deleted) {
       this.list.splice(changedIndex, 1);
     }
     else {
-      if (changedDoc) {
+      if (changedIndex >= 0) {
         this.list[changedIndex] = change.doc;
       }
       else {

@@ -1,6 +1,8 @@
 # Preserver Plus
+___
 
 Minimal notes app with rich text formatting.
+___
 
 ## What it is behind the app ?
 
@@ -54,6 +56,22 @@ $ npm install
 $ npm start
 ```
 Node server will be listen on `localhost:4000`.
+###### Note: You should have pouchdb installed and instance running on `localhost:5984` to sync up local pouchdb to central couchdb.
+
+## Deployed on
+
+- This app is deployed on [Netlify](https://www.netlify.com/).
+- Auth server deployed on [Heroku](https://www.heroku.com/).
+- Source is here.
+
+## Roadmap
+
+* [-] To do multiple dashboard.
+* [-] To do miltuple notes editable.
+* [-] To Preserve position of notes in dashboard.
+* [-] To have vertical & horizontal scroll layout in dashboard.
+* [-] To download notes.
+* [-] To do more.
 
 ## License
 
@@ -63,5 +81,7 @@ MIT
 
 > [hiteshbalar.com](https://www.hiteshbalar.com) &nbsp;&middot;&nbsp;
 > GitHub [@hsbalar](https://github.com/hsbalar) &nbsp;&middot;&nbsp;
+> Twitter [@hsbalar](https://twitter.com/hsbalar) &nbsp;&middot;&nbsp;
+> Instagram [@hsbalar](https://www.instagram.com/hsbalar) &nbsp;&middot;&nbsp;
 
 

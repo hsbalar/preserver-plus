@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1571737250343,
+  "timestamp": 1571742638867,
   "index": "/app/index.html",
   "assetGroups": [
     {
@@ -32,6 +32,7 @@
         "/app/assets/img/data.svg",
         "/app/assets/img/github.svg",
         "/app/assets/img/instagram.svg",
+        "/app/assets/img/logo.svg",
         "/app/assets/img/mail.svg",
         "/app/assets/img/messaging.svg",
         "/app/assets/img/search.svg",
@@ -52,6 +53,7 @@
     "/app/assets/img/data.svg": "72cd1f11591f641251a348013ea59d06bd71036d",
     "/app/assets/img/github.svg": "7655820c4f8b52a67eff3f186fb29812b4c9728b",
     "/app/assets/img/instagram.svg": "c9b818aea1eebb00a2d4c09177f3d090c190976e",
+    "/app/assets/img/logo.svg": "8e18eade1eb146cbe6a83d909f09eba29df05fd0",
     "/app/assets/img/mail.svg": "03dc33e1d6c3d0b5603cc5ce835fe8b7d79812d4",
     "/app/assets/img/messaging.svg": "6219c88789b7194ee73fb4abfb858c6be99e82c4",
     "/app/assets/img/search.svg": "9d40addef777268373b867a39b847da0d64ee973",
@@ -61,7 +63,7 @@
     "/app/assets/img/vault.svg": "4d4cd8de429c7c15667a2e7b5362dcd2d7e55591",
     "/app/assets/logo.png": "e37ada0515fe850d620f13cdd5b46da2bef167b0",
     "/app/favicon.ico": "b2144623fa4bc700916c99fc5dea1d7135405c3b",
-    "/app/index.html": "6d593747890163a99f74247ecad3c399d0986bde",
+    "/app/index.html": "50691f79d559c3e83ea7ced8f22ff44f9177fd3c",
     "/app/main-es2015.aad1c2ae4a3ab54a5f12.js": "68c10f196a84c3945082e92f27eb4d0d8a3240da",
     "/app/main-es5.aad1c2ae4a3ab54a5f12.js": "cdd98533e5f29933db7624d50d34caa6e3c28b68",
     "/app/manifest.webmanifest": "88c985856948d5204a1f8ae3cc3b5136917c71f3",

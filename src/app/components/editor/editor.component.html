@@ -1,39 +1,43 @@
 <div class="note-container">
   <form [formGroup]="form">
-    <div class="note-title">
-      <label
-        *ngIf="!editMode"
-        (click)="editTitleClick()"
-        class="note-title-label"
-        title="Edit"
-        >{{ form.get("title").value }}</label
-      >
-      <input
-        nz-input
-        autofocus
-        #editTitle
-        *ngIf="editMode"
-        formControlName="title"
-        class="note-title-input"
-        (keydown.esc)="onBlurTitle($event)"
-        (keydown.enter)="onBlurTitle($event)"
-        (focus)="$event.target.select()"
-        (focusout)="onBlurTitle($event)"
-      />
-      <span class="action">
-        <label class="save-notes-indication" *ngIf="isSaving">
-          <span *ngIf="isSaving == 'false'; else saving">All Changes Saved</span>
-        </label>
-        <ng-template #saving>
-            <i nz-icon [nzType]="'sync'" [nzSpin]="true"></i> Saving...
-        </ng-template>
-        <button nz-button nzType="dashed" type="button" routerLink="/">
-          <i nz-icon nzType="appstore" nzTheme="outline"></i>My Notes
-        </button>
-        <button nz-button nzType="dashed" type="button" (click)="newNoteClick()">
-          <i nz-icon nzType="plus" nzTheme="outline"></i>New
-        </button>
-      </span>
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <div class="note-title">
+          <label
+            *ngIf="!editMode"
+            (click)="editTitleClick()"
+            class="note-title-label"
+            title="Edit"
+            >{{ form.get("title").value }}</label
+          >
+          <input
+            nz-input
+            autofocus
+            #editTitle
+            *ngIf="editMode"
+            formControlName="title"
+            class="note-title-input"
+            (keydown.esc)="onBlurTitle($event)"
+            (keydown.enter)="onBlurTitle($event)"
+            (focus)="$event.target.select()"
+            (focusout)="onBlurTitle($event)"
+          />
+          <span class="action">
+            <label class="save-notes-indication" *ngIf="isSaving">
+              <span *ngIf="isSaving == 'false'; else saving">All Changes Saved</span>
+            </label>
+            <ng-template #saving>
+                <i nz-icon [nzType]="'sync'" [nzSpin]="true"></i> Saving...
+            </ng-template>
+            <button nz-button nzType="dashed" type="button" routerLink="/">
+              <i nz-icon nzType="appstore" nzTheme="outline"></i>My Notes
+            </button>
+            <button nz-button nzType="dashed" type="button" (click)="newNoteClick()">
+              <i nz-icon nzType="plus" nzTheme="outline"></i>New
+            </button>
+          </span>
+        </div>
+      </div>
     </div>
     <div class="document-editor">
       <div class="document-editor__editable-container">

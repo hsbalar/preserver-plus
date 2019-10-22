@@ -41,6 +41,11 @@ main {
   top: 46px;
 }
 
+.roadmap-list {
+	list-style: circle;
+	padding-left: 25px;
+}
+
 figure {
 	margin: 1em 40px
 }

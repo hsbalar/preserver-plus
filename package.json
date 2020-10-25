@@ -24,7 +24,7 @@
     "@ckeditor/ckeditor5-build-classic": "^12.4.0",
     "@ckeditor/ckeditor5-build-decoupled-document": "^12.4.0",
     "angular2gridster": "^8.1.0",
-    "ng-zorro-antd": "^8.1.2",
+    "ng-zorro-antd": "^10.0.2",
     "pouchdb": "^7.1.1",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",

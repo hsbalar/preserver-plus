@@ -10,12 +10,9 @@
 
 .search-bar {
   display: flex;
-  padding: 15px 25px;
-  nz-input-group {
-    padding-right: 10px;
-    input {
-      background: #f0f0f0;
-    }
+  padding: 25px 25px 15px 25px;
+  button {
+    margin-left: 10px;
   }
 }
 
@@ -48,7 +45,7 @@
   .panel-actions {
     color: #001528;
     background: white;
-    transition: all .24s;
+    transition: all 0.24s;
     position: absolute;
     right: 10px;
     top: 8px;
@@ -70,7 +67,8 @@
   padding: 100px;
 }
 
-.panel-heading:hover, .panel-body:hover {
+.panel-heading:hover,
+.panel-body:hover {
   .panel-actions {
     opacity: 1;
   }
@@ -165,7 +163,7 @@
   font-size: 24px;
   text-align: center;
   background: #fff;
-  box-shadow: 0 0 1px rgba(0,0,0,.2);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   cursor: pointer;

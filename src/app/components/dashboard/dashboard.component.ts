@@ -1,6 +1,16 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { DbService } from 'src/app/services/db.service';
-import { GridsterComponent, IGridsterOptions, IGridsterDraggableOptions } from 'angular2gridster';
+import {
+  GridsterComponent,
+  IGridsterOptions,
+  IGridsterDraggableOptions,
+} from 'angular2gridster';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
@@ -10,17 +20,18 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-
   data: any = [];
   widget: any = {
-    x: 0, y: 0,
-    w: 1, h: 1,
+    x: 0,
+    y: 0,
+    w: 1,
+    h: 1,
     dragAndDrop: true,
-    resizable: true
-  }
+    resizable: true,
+  };
   searchDraft = new FormControl();
   subscription: Subscription;
 
@@ -28,28 +39,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     sm: 'xSm',
     md: 'xMd',
     lg: 'xLg',
-    xl: 'xXl'
+    xl: 'xXl',
   };
 
   static Y_PROPERTY_MAP: any = {
     sm: 'ySm',
     md: 'yMd',
     lg: 'yLg',
-    xl: 'yXl'
+    xl: 'yXl',
   };
 
   static W_PROPERTY_MAP: any = {
     sm: 'wSm',
     md: 'wMd',
     lg: 'wLg',
-    xl: 'wXl'
+    xl: 'wXl',
   };
 
   static H_PROPERTY_MAP: any = {
     sm: 'hSm',
     md: 'hMd',
     lg: 'hLg',
-    xl: 'hXl'
+    xl: 'hXl',
   };
 
   constructor(
@@ -57,12 +68,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public accountService: AccountService,
     public router: Router,
     public dbService: DbService
-  ) { }
+  ) {}
 
   @ViewChild(GridsterComponent, { static: true }) gridster: GridsterComponent;
   itemOptions = {
     maxWidth: 3,
-    maxHeight: 4
+    maxHeight: 4,
   };
   gridsterOptions: IGridsterOptions = {
     lanes: 2,
@@ -73,13 +84,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     resizeHandles: {
       s: true,
       e: true,
-      se: true
+      se: true,
     },
     widthHeightRatio: 1,
     lines: {
       visible: true,
       color: '#afafaf',
-      width: 2
+      width: 2,
     },
     shrink: true,
     useCSSTransforms: true,
@@ -91,28 +102,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
       {
         breakpoint: 'sm',
         minWidth: 480,
-        lanes: 3
+        lanes: 3,
       },
       {
         breakpoint: 'md',
         minWidth: 768,
-        lanes: 4
+        lanes: 4,
       },
       {
         breakpoint: 'lg',
         minWidth: 1250,
-        lanes: 6
+        lanes: 6,
       },
       {
         breakpoint: 'xl',
         minWidth: 1800,
-        lanes: 8
-      }
-    ]
+        lanes: 8,
+      },
+    ],
   };
 
   gridsterDraggableOptions: IGridsterDraggableOptions = {
-    handlerClass: 'panel-heading'
+    handlerClass: 'panel-heading',
   };
 
   ngOnInit() {
@@ -122,11 +133,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     });
 
     this.searchDraft.valueChanges
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged()
-      )
-      .subscribe(newValue => {
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((newValue) => {
         this.filterNotes(newValue);
       });
   }
@@ -134,13 +142,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   onReflow(event: any) {}
 
   removeLine(gridster: GridsterComponent) {
-    gridster.setOption('lanes', --this.gridsterOptions.lanes)
-      .reload();
+    gridster.setOption('lanes', --this.gridsterOptions.lanes).reload();
   }
 
   addLine(gridster: GridsterComponent) {
-    gridster.setOption('lanes', ++this.gridsterOptions.lanes)
-      .reload();
+    gridster.setOption('lanes', ++this.gridsterOptions.lanes).reload();
   }
 
   setWidth(widget: any, size: number, e: MouseEvent, gridster) {
@@ -148,7 +154,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     e.preventDefault();
 
     const breakpoint = gridster.options.breakpoint;
-    let newWidth = widget[DashboardComponent.W_PROPERTY_MAP[breakpoint] || 'w'] + size;
+    let newWidth =
+      widget[DashboardComponent.W_PROPERTY_MAP[breakpoint] || 'w'] + size;
     if (newWidth < 1) {
       newWidth = 1;
     }
@@ -162,7 +169,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     e.preventDefault();
 
     const breakpoint = gridster.options.breakpoint;
-    let newHeight = widget[DashboardComponent.H_PROPERTY_MAP[breakpoint] || 'h'] + size;
+    let newHeight =
+      widget[DashboardComponent.H_PROPERTY_MAP[breakpoint] || 'h'] + size;
     if (newHeight < 1) {
       newHeight = 1;
     }
@@ -180,14 +188,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
   over(event: any) {
     const size = event.item.calculateSize(event.gridster);
 
-    event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.width = size.width + 'px';
-    event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.height = size.height + 'px';
+    event.item.itemPrototype.$element.querySelector(
+      '.gridster-item-inner'
+    ).style.width = size.width + 'px';
+    event.item.itemPrototype.$element.querySelector(
+      '.gridster-item-inner'
+    ).style.height = size.height + 'px';
     event.item.itemPrototype.$element.classList.add('is-over');
   }
 
   out(event: any) {
-    event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.width = '';
-    event.item.itemPrototype.$element.querySelector('.gridster-item-inner').style.height = '';
+    event.item.itemPrototype.$element.querySelector(
+      '.gridster-item-inner'
+    ).style.width = '';
+    event.item.itemPrototype.$element.querySelector(
+      '.gridster-item-inner'
+    ).style.height = '';
     event.item.itemPrototype.$element.classList.remove('is-over');
   }
 
@@ -205,8 +221,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   filterNotes(searchTerm: string) {
     if (searchTerm) {
       let results = [];
-      this.data.forEach(el => {
-        if ((el.title && el.title.toLowerCase().includes(searchTerm.trim().toLowerCase())) || (el.content && el.content.toLowerCase().includes(searchTerm.trim().toLowerCase()))) {
+      this.data.forEach((el) => {
+        if (
+          (el.title &&
+            el.title.toLowerCase().includes(searchTerm.trim().toLowerCase())) ||
+          (el.content &&
+            el.content.toLowerCase().includes(searchTerm.trim().toLowerCase()))
+        ) {
           results.push(el);
         }
       });

@@ -47,7 +47,7 @@
 
 ::ng-deep .document-editor .ck-content,
 .document-editor .ck-heading-dropdown .ck-list .ck-button__label {
-  font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 16px/1.6 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .note-title {
@@ -73,7 +73,7 @@
   .note-title-label:hover {
     border: 1px solid transparent;
     border-radius: 2px;
-    box-shadow: 0 0 0 2px rgba(0, 21, 41, 0.2)
+    box-shadow: 0 0 0 2px rgba(0, 21, 41, 0.2);
   }
 }
 
@@ -91,7 +91,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-  .note-container  {
+  .note-container {
     padding: 0 15px;
   }
 

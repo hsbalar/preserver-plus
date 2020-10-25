@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { Router } from '@angular/router';
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
   validateForm: FormGroup;
   error: boolean = false;
   loading: boolean = false;
@@ -24,19 +23,21 @@ export class LoginComponent implements OnInit {
 
     if (this.validateForm.invalid || this.loading) return;
     this.loading = true;
-    this.accountService.login(this.validateForm.value)
-      .subscribe((res: any) => {
+    this.accountService.login(this.validateForm.value).subscribe(
+      (res: any) => {
         this.accountService.currentUser.next(res);
         localStorage.setItem('_user', btoa(JSON.stringify(res)));
         this.dbService.initRemoteDB();
         this.router.navigate(['/']);
         this.loading = false;
-      }, err => {
+      },
+      (err) => {
         this.error = true;
         this.loading = false;
         if (err.error && err.error.message)
           this.msgService.error(err.error.message);
-      });
+      }
+    );
   }
 
   constructor(
@@ -44,13 +45,14 @@ export class LoginComponent implements OnInit {
     private dbService: DbService,
     private accountService: AccountService,
     private msgService: NzMessageService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      remember: [true]
+      remember: [true],
     });
   }
 }

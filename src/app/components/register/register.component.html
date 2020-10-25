@@ -1,46 +1,87 @@
 <h3 class="register-header">Create new account</h3>
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-  
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username">Username</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid!">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="username"
+      >Username</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid!"
+    >
       <input nz-input formControlName="username" id="username" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstname">First Name</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid!">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="firstname"
+      >First Name</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid!"
+    >
       <input nz-input formControlName="firstname" id="firstname" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lastname">Last Name</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid!">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="lastname"
+      >Last Name</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid!"
+    >
       <input nz-input formControlName="lastname" id="lastname" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="email"
+      >E-mail</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="The input is not valid E-mail!"
+    >
       <input nz-input formControlName="email" id="email" />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired>Password</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Please input your password!">
-      <input nz-input type="password" id="password" formControlName="password"
-        (ngModelChange)="updateConfirmValidator()" />
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="password" nzRequired
+      >Password</nz-form-label
+    >
+    <nz-form-control
+      [nzSm]="14"
+      [nzXs]="24"
+      nzErrorTip="Please input your password!"
+    >
+      <input
+        nz-input
+        type="password"
+        id="password"
+        formControlName="password"
+        (ngModelChange)="updateConfirmValidator()"
+      />
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired>Confirm Password</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="checkPassword" nzRequired
+      >Confirm Password</nz-form-label
+    >
     <nz-form-control [nzSm]="14" [nzXs]="24" [nzErrorTip]="errorTpl">
-      <input nz-input type="password" formControlName="confirmPassword" id="checkPassword" />
+      <input
+        nz-input
+        type="password"
+        formControlName="confirmPassword"
+        id="checkPassword"
+      />
       <ng-template #errorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           Please confirm your password!

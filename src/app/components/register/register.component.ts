@@ -1,28 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { } from 'lodash';
+import {} from 'lodash';
 
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 import { AccountService } from 'src/app/services/account.service';
 import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  
   validateForm: FormGroup;
   loading: boolean = false;
-  
+
   constructor(
     private router: Router,
     private dbService: DbService,
     private formBuilder: FormBuilder,
     private msgService: NzMessageService,
-    private accountService: AccountService) {}
+    private accountService: AccountService
+  ) {}
 
   submitForm(): void {
     for (const i in this.validateForm.controls) {
@@ -33,27 +39,30 @@ export class RegisterComponent implements OnInit {
     if (this.validateForm.invalid || this.loading) return;
 
     this.loading = true;
-    this.accountService.register(this.validateForm.value)
-      .subscribe((res: any) => {
+    this.accountService.register(this.validateForm.value).subscribe(
+      (res: any) => {
         this.accountService.currentUser.next(res);
         localStorage.setItem('_user', btoa(JSON.stringify(res)));
         this.dbService.initRemoteDB();
         this.router.navigate(['/']);
         this.loading = false;
-      }, err => {
+      },
+      (err) => {
         this.loading = false;
         if (err.error && err.error.validationErrors) {
           for (let key in err.error.validationErrors) {
             this.msgService.error(err.error.validationErrors[key][0]);
           }
         }
-      });
-
+      }
+    );
   }
 
   updateConfirmValidator(): void {
     /** wait for refresh value */
-    Promise.resolve().then(() => this.validateForm.controls.confirmPassword.updateValueAndValidity());
+    Promise.resolve().then(() =>
+      this.validateForm.controls.confirmPassword.updateValueAndValidity()
+    );
   }
 
   confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
@@ -65,17 +74,18 @@ export class RegisterComponent implements OnInit {
     return {};
   };
 
-
   ngOnInit(): void {
     this.validateForm = this.formBuilder.group({
       email: [null, [Validators.email, Validators.required]],
       password: [null, [Validators.required]],
-      confirmPassword: [null, [Validators.required, this.confirmationValidator]],
+      confirmPassword: [
+        null,
+        [Validators.required, this.confirmationValidator],
+      ],
       username: [null, [Validators.required]],
       firstname: [null, [Validators.required]],
       lastname: [null, [Validators.required]],
-      agree: [false]
+      agree: [false],
     });
   }
-  
 }

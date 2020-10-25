@@ -1,12 +1,23 @@
 <nz-layout>
   <nz-header>
-    <div class="logo"><a href="#" routerLink="/">Preserver<span>+</span></a>
-      <a class="github-link" href="https://github.com/hsbalar/preserver-plus" target="_blank"><i nz-icon nzType="github" nzTheme="outline"></i></a>
+    <div class="logo">
+      <a href="#" routerLink="/">Preserver<span>+</span></a>
+      <a
+        class="github-link"
+        href="https://github.com/hsbalar/preserver-plus"
+        target="_blank"
+        ><i nz-icon nzType="github" nzTheme="outline"></i
+      ></a>
     </div>
     <div class="header-action" *ngIf="accountService.user; else userNotLogin">
-      <nz-avatar class="header-item" nzIcon="user" [nzSize]="26" style="color:#f56a00; background-color:#fde3cf;"></nz-avatar>
+      <nz-avatar
+        class="header-item"
+        nzIcon="user"
+        [nzSize]="26"
+        style="color: #f56a00; background-color: #fde3cf"
+      ></nz-avatar>
       <a nz-dropdown [nzDropdownMenu]="menu" [nzPlacement]="'bottomRight'">
-        {{accountService?.user?.user_id}} <i nz-icon nzType="down"></i>
+        {{ accountService?.user?.user_id }} <i nz-icon nzType="down"></i>
       </a>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu nzSelectable>
